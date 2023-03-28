@@ -18,6 +18,7 @@
 package org.apache.hadoop.hive.serde2.binarysortable;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Properties;
 import java.util.Random;
 
@@ -47,8 +48,8 @@ public class TestBinarySortableSerDe {
 
   private static final String DECIMAL_CHARS = "0123456789";
 
-  public static HashMap<String, String> makeHashMap(String... params) {
-    HashMap<String, String> r = new HashMap<String, String>();
+  public static LinkedHashMap<String, String> makeLinkedHashMap(String... params) {
+    LinkedHashMap<String, String> r = new LinkedHashMap<String, String>();
     for (int i = 0; i < params.length; i += 2) {
       r.put(params[i], params[i + 1]);
     }
