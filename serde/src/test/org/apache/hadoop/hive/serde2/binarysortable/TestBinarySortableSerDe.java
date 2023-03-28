@@ -140,7 +140,7 @@ public class TestBinarySortableSerDe{
             structs[j] = t;
           }
         } else {
-          return null;
+          // No return
         }
       }
     }
