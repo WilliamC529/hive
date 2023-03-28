@@ -39,6 +39,7 @@ import org.apache.hadoop.io.BytesWritable;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import java.lang.ClassCastException;
 
 /**
  * TestBinarySortableSerDe.
@@ -126,7 +127,7 @@ public class TestBinarySortableSerDe {
         System.out.println("serialized[" + i + "] = " + hexString(bytes[i]));
         assertEquals(rows[i], deserialized[i]);
         }
-      } catch (Exception e) {
+      } catch (ClassCastException e) {
         // Type error
       }
     }
@@ -142,7 +143,7 @@ public class TestBinarySortableSerDe {
             structs[i] = structs[j];
             structs[j] = t;
           }
-        } catch (Exception e) {
+        } catch (ClassCastException e) {
           // Type error 
         }
         
