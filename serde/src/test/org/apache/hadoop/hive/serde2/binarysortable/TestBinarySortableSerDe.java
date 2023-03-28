@@ -133,11 +133,11 @@ public class TestBinarySortableSerDe{
     for (int i = 0; i < structs.length; i++) {
       for (int j = i + 1; j < structs.length; j++) {
         // The 2nd compare
-        if ((structs[i].getClass().equals(structs[j].getClass())) && (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) != 0))) {
+        if ((structs[i].getClass().equals(structs[j].getClass())) && (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) > 0)) {
           Object t = structs[i];
           structs[i] = structs[j];
           structs[j] = t;
-        } 
+        }
       }
     }
   }
