@@ -12,7 +12,7 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
       - name: Test
-        run: mvn -pl serde -am test -Dtest=org.apache.hadoop.hive.serde2.binarysortable.TestBinarySortableSerDe.testBinarySortableSerDe -DfailIfNoTests=false
+        run: mvn -pl serde -am test -Dtest=org.apache.hadoop.hive.serde2.binarysortable.TestBinarySortableSerDe -DfailIfNoTests=false
         
   Test_With_Nondex_Shuffling:
     runs-on: ubuntu-latest
@@ -24,4 +24,4 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
       - name: Test
-        run: mvn -pl serde -am edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=org.apache.hadoop.hive.serde2.binarysortable.TestBinarySortableSerDe.testBinarySortableSerDe -DfailIfNoTests=false
+        run: mvn -pl serde -am edu.illinois:nondex-maven-plugin:2.1.1:nondex -Dtest=org.apache.hadoop.hive.serde2.binarysortable.TestBinarySortableSerDe -DfailIfNoTests=false
