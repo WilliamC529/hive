@@ -138,6 +138,7 @@ public class TestBinarySortableSerDe{
             Object t = structs[i];
             structs[i] = structs[j];
             structs[j] = t;
+          }
         } else {
           return null;
         }
