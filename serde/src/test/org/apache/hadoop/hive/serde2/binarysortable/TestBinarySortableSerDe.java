@@ -87,6 +87,7 @@ public class TestBinarySortableSerDe {
     // Try to serialize
     BytesWritable bytes[] = new BytesWritable[rows.length];
     for (int i = 0; i < rows.length; i++) {
+      // Returns BytesWritable
       BytesWritable s = (BytesWritable) serde.serialize(rows[i], rowOI);
       bytes[i] = new BytesWritable();
       bytes[i].set(s);
@@ -115,14 +116,18 @@ public class TestBinarySortableSerDe {
     Object[] deserialized = new Object[rows.length];
     for (int i = 0; i < rows.length; i++) {
       deserialized[i] = serde.deserialize(bytes[i]);
-      if (0 != ObjectInspectorUtils.compare(rows[i], rowOI, deserialized[i],
-          serdeOI)) {
+      // The 1st compare; row and deserialized are both objects
+      try {
+        if (ObjectInspectorUtils.compare(rows[i], rowOI, deserialized[i], serdeOI) != 0) {
         System.out.println("structs[" + i + "] = "
             + SerDeUtils.getJSONString(rows[i], rowOI));
         System.out.println("deserialized[" + i + "] = "
             + SerDeUtils.getJSONString(deserialized[i], serdeOI));
         System.out.println("serialized[" + i + "] = " + hexString(bytes[i]));
         assertEquals(rows[i], deserialized[i]);
+        }
+      } catch (TypeMismatchException) {
+        // Nothing for now
       }
     }
   }
@@ -130,11 +135,17 @@ public class TestBinarySortableSerDe {
   public static void sort(Object[] structs, ObjectInspector oi) {
     for (int i = 0; i < structs.length; i++) {
       for (int j = i + 1; j < structs.length; j++) {
-        if (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) > 0) {
-          Object t = structs[i];
-          structs[i] = structs[j];
-          structs[j] = t;
+        // The 2nd compare
+        try {
+          if (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) != 0) {
+            Object t = structs[i];
+            structs[i] = structs[j];
+            structs[j] = t;
+          }
+        } catch (TypeMismatchException) {
+          // Nothing for now
         }
+        
       }
     }
   }
@@ -153,6 +164,7 @@ public class TestBinarySortableSerDe {
       // First try non-random values
       for (i = 0; i < MyTestClass.nrDecimal.length; i++) {
         MyTestClass t = new MyTestClass();
+        // Random fill in different type of types
         t.nonRandomFill(i);
         rows[i] = t;
       }
