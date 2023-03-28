@@ -126,7 +126,7 @@ public class TestBinarySortableSerDe {
         System.out.println("serialized[" + i + "] = " + hexString(bytes[i]));
         assertEquals(rows[i], deserialized[i]);
         }
-      } catch (TypeMismatchException) {
+      } catch (TypeMismatchException e) {
         // Nothing for now
       }
     }
@@ -142,7 +142,7 @@ public class TestBinarySortableSerDe {
             structs[i] = structs[j];
             structs[j] = t;
           }
-        } catch (TypeMismatchException) {
+        } catch (TypeMismatchException e) {
           // Nothing for now
         }
         
