@@ -45,7 +45,7 @@ import java.lang.ClassCastException;
  * TestBinarySortableSerDe.
  *
  */
-public class TestBinarySortableSerDe {
+public class TestBinarySortableSerDe{
 
   private static final String DECIMAL_CHARS = "0123456789";
 
@@ -118,17 +118,13 @@ public class TestBinarySortableSerDe {
     for (int i = 0; i < rows.length; i++) {
       deserialized[i] = serde.deserialize(bytes[i]);
       // The 1st compare; row and deserialized are both objects
-      try {
-        if (ObjectInspectorUtils.compare(rows[i], rowOI, deserialized[i], serdeOI) != 0) {
+      if ((type(rows[i]) == type(deserialized[i])) && (ObjectInspectorUtils.compare(rows[i], rowOI, deserialized[i], serdeOI) != 0)) {
         System.out.println("structs[" + i + "] = "
             + SerDeUtils.getJSONString(rows[i], rowOI));
         System.out.println("deserialized[" + i + "] = "
             + SerDeUtils.getJSONString(deserialized[i], serdeOI));
         System.out.println("serialized[" + i + "] = " + hexString(bytes[i]));
         assertEquals(rows[i], deserialized[i]);
-        }
-      } catch (ClassCastException e) {
-        // Type error
       }
     }
   }
@@ -137,16 +133,11 @@ public class TestBinarySortableSerDe {
     for (int i = 0; i < structs.length; i++) {
       for (int j = i + 1; j < structs.length; j++) {
         // The 2nd compare
-        try {
-          if (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) != 0) {
-            Object t = structs[i];
-            structs[i] = structs[j];
-            structs[j] = t;
-          }
-        } catch (ClassCastException e) {
-          // Type error 
-        }
-        
+        if ((type(structs[i]) == type(structs[j]) && (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) != 0)) {
+          Object t = structs[i];
+          structs[i] = structs[j];
+          structs[j] = t;
+        } 
       }
     }
   }
