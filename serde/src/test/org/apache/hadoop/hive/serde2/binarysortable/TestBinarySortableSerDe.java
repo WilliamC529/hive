@@ -118,7 +118,7 @@ public class TestBinarySortableSerDe{
     for (int i = 0; i < rows.length; i++) {
       deserialized[i] = serde.deserialize(bytes[i]);
       // The 1st compare; row and deserialized are both objects
-      if ((type(rows[i]) == type(deserialized[i])) && (ObjectInspectorUtils.compare(rows[i], rowOI, deserialized[i], serdeOI) != 0)) {
+      if ((rows[i].getClass().equals(deserialized[i].getClass())) && (ObjectInspectorUtils.compare(rows[i], rowOI, deserialized[i], serdeOI) != 0)) {
         System.out.println("structs[" + i + "] = "
             + SerDeUtils.getJSONString(rows[i], rowOI));
         System.out.println("deserialized[" + i + "] = "
@@ -133,7 +133,7 @@ public class TestBinarySortableSerDe{
     for (int i = 0; i < structs.length; i++) {
       for (int j = i + 1; j < structs.length; j++) {
         // The 2nd compare
-        if ((type(structs[i]) == type(structs[j]) && (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) != 0))) {
+        if ((structs[i].getClass().equals(structs[j].getClass())) && (ObjectInspectorUtils.compare(structs[i], oi, structs[j], oi) != 0))) {
           Object t = structs[i];
           structs[i] = structs[j];
           structs[j] = t;
